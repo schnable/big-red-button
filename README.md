@@ -7,3 +7,6 @@ I've used this udev rule to help simplify the device naming on my raspberry pi:
 
      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{product}=="DL100B Dream Cheeky Generic Controller", MODE="0664", GROUP="users", SYMLINK+="big-red-button"
 
+Enjoy.
+
+Andrew
