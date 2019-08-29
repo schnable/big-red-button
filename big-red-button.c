@@ -4,6 +4,7 @@
 ,* A program to convert USB firing events from the Dream Cheeky 'Big Red Button' to MQTT events.
 ,*/
 
+#include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
@@ -12,6 +13,8 @@
 #define LID_CLOSED 21
 #define BUTTON_PRESSED 22
 #define LID_OPEN 23
+
+#define CMD "/home/schnable/big-red-button/doit\n"
 
 int main(int argc, char **argv)
 {
@@ -30,7 +33,7 @@ int main(int argc, char **argv)
   fd = open("/dev/big-red-button", O_RDWR|O_NONBLOCK);
 
   if (fd < 0) {
-    perror("Unable to open device");
+    perror("Unable to open device /dev/big-red-button - check your udev rules.");
     return 1;
   }
 
@@ -58,7 +61,8 @@ int main(int argc, char **argv)
          fflush(stdout);
       } else if (prior != BUTTON_PRESSED && buf[0] == BUTTON_PRESSED) {
          // do something here...
-         printf("Fire!\n");
+         // printf("Fire!\n");
+         system(CMD);
          fflush(stdout);
       } else if (prior != LID_CLOSED && buf[0] == LID_CLOSED) {
          // do something here...
